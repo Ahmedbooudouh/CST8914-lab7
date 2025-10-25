@@ -24,9 +24,9 @@ body {
 a{
   color: #006b3a;
 }
-main a{
-  outline: none;
-}
+/*main a{
+  outline: none;  // Remove the rule that hides focus outlines
+}*/
 h2 {
   margin-top: 0;
 }
@@ -192,11 +192,24 @@ article p {
 .pull-right {
   float: right;
 }
+.read {
+  color: #006b3a; 
+  text-decoration: underline;
+}
+                             /*Add CSS code to make focus visible */
+.read:hover,
+.read:focus {
+  color: #d32f2f; 
+  text-decoration: underline;
+  outline: 2px solid #d32f2f;
+ 
+}
 
   </style>
 </head>
 
 <body>
+
   <header>
 
     <div class="container">
@@ -206,22 +219,22 @@ article p {
       <nav class="menu">
         <a href="#">Home</a>
         <a href="#">Politics</a>
-        <a href="#" tabindex="-1">Business</a>
+        <a href="#" >Business</a>  <!-- Delete tabindex="-1" That make Business link infocusable-->
         <a href="#">Entertainment</a>
         <a href="#">Sports</a>
-        <a href="#" class="btn-search pull-right"><img src="https://raw.githubusercontent.com/udacity/ud891/2de2a0688c68809a3b453db3a24b1a59e8401459/lesson2-focus/02-dom-order/images/search.svg" alt="Search" />Search</a> 
+        <a href="#" class="btn-search pull-right"><img src="https://raw.githubusercontent.com/udacity/ud891/2de2a0688c68809a3b453db3a24b1a59e8401459/lesson2-focus/02-dom-order/images/search.svg" alt=" aria-hidden="true" />Search</a> <!-- /alt=" aria-hidden="true"/ Decorative image, hidden from screen readers -->
 
       </nav>
     </div>
   </header>
-  <div class="newsletter">
+  <!--<div class="newsletter">
     <div class="container">
       <h3>Like the Funion? Consider joining our newsletter!</h3>
       <input type="text">
-      <button type="button" onfocus="getFocus()">Sign up</button></div>
+      <button type="button" onfocus="getFocus()">Sign up</button></div>  //Code deplaced to footer 
       
     </div>
-  </div>
+  </div>-->
   <main class="container">
     <h2 class="offscreen">Top story</h2>
     <article class="main-story">
@@ -230,22 +243,23 @@ article p {
         <h3 class="headline">Study shows 9 out of 10 cats quietly judging their owners as they sleep</h3>
         <p>
           GRAND RAPIDS, MILorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read More</a>
+          aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
           
         </p>
+        <a class="read" href="#">Read More</a> 
       </div>
     </article>
   
     <div class="side-by-side">
       <div class="column">
         <div class="tier-header">
-          <h2 tabindex="0">In the news</h2>
+          <h2 >In the news</h2> <!--tabindex="0" deleted, we don't need it with title'-->
         </div>
         <article>
           <h3 class="headline">Bee wonders if maybe everyone else is a drone and he's the only one who has it "figured out."</h3>
-          <p><a href="#" tabindex="1"><b>Read More</b></a></p>
-          <img src="https://github.com/udacity/ud891/blob/gh-pages/lesson2-focus/02-dom-order/images/bee.jpg?raw=true" alt="A bee on top of a flower" />
-        </article>
+          <img src="https://github.com/udacity/ud891/blob/gh-pages/lesson2-focus/02-dom-order/images/bee.jpg?raw=true" alt="A bee on top of a flower" /> 
+          <a class="read" href="#">Read More</a>  <!--<a href="#" tabindex="1"><b>Read More</b> deplaced out of paragraph without tabindex to be focussable and add class to config css--> 
+      </article>
       </div>
       <div class="column">
         <article>
@@ -254,12 +268,13 @@ article p {
             <h3 class="headline">Telephone booths. How is this still a thing?</h3>
             <p>
               LONDON-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-              irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read More</a>
+              irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+            <a class="read" href="#">Read More</a> <!--<a href="#"><b>Read More</b> deplaced out of paragraph to be focussable and add class to config css--> 
           </div>
         </article>
       </div>
-    </div>
+    
     <div class="three-col">
       <div class="tier-header">
         <h2>Recommended</h2>
@@ -268,31 +283,45 @@ article p {
         <article>
           <img src="https://github.com/udacity/ud891/blob/gh-pages/lesson2-focus/02-dom-order/images/dog.jpg?raw=true" alt="A dog at a desk looks up at a laptop and mouse" />
           <div class="info">
-            <h3 class="headline">Turn man's best friend into man's best personal assistant. <a href="#">Read More</a></h3>
+            <h3 class="headline">Turn man's best friend into man's best personal assistant. </h3>
+             <a class="read" href="#">Read More</a> <!--<a href="#"><b>Read More</b> deplaced out of paragraph to be focussable and add class to config css--> 
+          </div>
           </div>
         </article>
         <article>
           <img src="https://github.com/udacity/ud891/blob/gh-pages/lesson2-focus/02-dom-order/images/coffee.jpg?raw=true" alt="A cup of coffee on a table" />
           <div class="info">
-            <h3 class="headline">San Franciscans are losing their minds over this third wave, artisanal, fair trade, handcrafted, locavore coffee. <a href="#">Read More</a></h3>
+            <h3 class="headline">San Franciscans are losing their minds over this third wave, artisanal, fair trade, handcrafted, locavore coffee. </h3>
+             <a class="read" href="#">Read More</a> <!--<a href="#"><b>Read More</b> deplaced out of paragraph to be focussable and add class to config css--> 
+          </div>
         </article>
         <article>
           <img src="https://github.com/udacity/ud891/blob/gh-pages/lesson2-focus/02-dom-order/images/football.jpg?raw=true" alt="A football player hands the ball off to another player" />
           <div class="info">
-            <h3 class="headline">Sportsball team scores a touchpoint to win the big race. <a href="#">Read More</a></h3>
+            <h3 class="headline">Sportsball team scores a touchpoint to win the big race. </h3>
+             <a class="read" href="#">Read More</a> <!--<a href="#"><b>Read More</b> deplaced out of paragraph to be focussable and add class to config css--> 
+          </div>
           </div>
         </article>
       </div>
     </div>
     
   </main>
-  <!--   stuff can be added here :)
+  <!--   stuff can be added here :) -->
   <footer>
+      <div class="newsletter">
+    <div class="container">
+      <h3>Like the Funion? Consider joining our newsletter!</h3>  <!-- newsletter deplaced to footer to get correct landmark-->
+      <label for="email" >Email</label>  <!--linked label with input-->
+      <input id="email" type="text">
+      <button type="button" onclick="onclic()" aria-label="Sign up (opens in a new window)">Sign up</button></div>
+      
+    </div>
   </footer>
-  -->
+ 
   
-  <script>
-    function getFocus() {
+  <script>  
+    function onclic() {     // Modify js function event from  focus to onclick
       window.open('https://aidaform.com/templates/thank-you-page-with-redirects.html','mywindow').focus()
     }
     </script>
