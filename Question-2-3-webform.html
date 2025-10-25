@@ -1,187 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Form validation with messages on top: Code example - Accessibility Developer Guide example</title>
-        <meta charset="utf-8">
-        <style>.control, fieldset {
-         
+
+<head>
+  <title>Form validation with messages on top: Code example - Accessibility Developer Guide example</title>
+  <meta charset="utf-8">
+  <style>
+    .control,
+    fieldset {
+
       margin: 6px 0;
     }
+
     /* Makes labels align neatly beside inputs */
     label {
       display: inline-block;
       width: 80px;
       vertical-align: top;
     }
-    
-    input + label {
+
+    input+label {
       width: auto;
     }
-    
-    .error, .required {
+
+    .error,
+    .required {
       color: red;
     }
-    
+
     fieldset ul {
       margin: 0;
     }
-     /* Visually hide content but keep it available to screen readers.*/
-     .visually-hidden {
-        position: absolute !important;
-        height: 1px; width: 1px;
-        overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap; border: 0; padding: 0; margin: -1px;
-      }
 
-/* Make the textarea a known width that helps alignment) */
-#biography {
-  display: inline-block;
-  width: 290px;         
-  vertical-align: top;
-}
+    /* Visually hide content but keep it available to screen readers.*/
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+      border: 0;
+      padding: 0;
+      margin: -1px;
+    }
 
-/* Put the hint under the textarea and give it the same width */
-#bio_hint {
-  display: block;       
-  margin-left: 85px;   
-  margin-top: 6px;
-  width: 420px;          
-}
-/* Compact fieldset aligned with the input column */
-fieldset {
-  display: inline-block;     
-  width: 380px;              
-  box-sizing: border-box;    
-  margin-left: 120px;        
-  padding: 10px 12px;       
-  border-radius: 6px;       
-}
+    /* Make the textarea a known width that helps alignment) */
+    #biography {
+      display: inline-block;
+      width: 290px;
+      vertical-align: top;
+    }
 
-fieldset > div {             /* tidy spacing for radio rows */
-  margin: 6px 0;
-}
-   </style>
-    </head>
-    <body>
-        <h1>Feedback form</h1>
-    <form>
-        <!-- Label is linked to input with 'for' + 'id'.
+    /* Put the hint under the textarea and give it the same width */
+    #bio_hint {
+      display: block;
+      margin-left: 85px;
+      margin-top: 6px;
+      width: 420px;
+    }
+
+    /* Compact fieldset aligned with the input column */
+    fieldset {
+      display: inline-block;
+      width: 380px;
+      box-sizing: border-box;
+      margin-left: 120px;
+      padding: 10px 12px;
+      border-radius: 6px;
+    }
+
+    fieldset>div {
+      /* tidy spacing for radio rows */
+      margin: 6px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Feedback form</h1>
+  <form>
+    <!-- Label is linked to input with 'for' + 'id'.
        Marked as required and has a hidden hint read by screen readers. -->
-        <div class="control">
-           <label for="name">Full name <span class="required">*</span></label>
-        <input id="name" name="name" type="text" required aria-describedby="name_hint" />
-        <span id="name_hint" class="visually-hidden">Required field.</span>
-        </div>
-         <!-- Inline instructions are connected to the textarea via aria-describedby. -->
-     <div class="control">
-        <label for="biography">Biography</label>
-        <textarea id="biography" name="biography" aria-describedby="bio_hint"></textarea>
-        <span id="bio_hint">Include examples on your skills in JavaScript.</span>
+    <div class="control">
+      <label for="name">Full name <span class="required">*</span></label>
+      <input id="name" name="name" type="text" required aria-describedby="name_hint" />
+      <span id="name_hint" class="visually-hidden">Required field.</span>
+    </div>
+    <!-- Inline instructions are connected to the textarea via aria-describedby. -->
+    <div class="control">
+      <label for="biography">Biography</label>
+      <textarea id="biography" name="biography" aria-describedby="bio_hint"></textarea>
+      <span id="bio_hint">Include examples on your skills in JavaScript.</span>
+    </div>
+    <!-- Radios are grouped with fieldset/legend so the group has a name. -->
+    <fieldset class="control">
+      <legend>Gender</legend>
+      <div>
+        <!-- Label is linked to input with 'for' + 'id'-->
+        <input id="gender_male" name="gender" type="radio" value="male" />
+        <label for="gender_male">Male</label>
       </div>
-       <!-- Radios are grouped with fieldset/legend so the group has a name. -->
-        <fieldset class="control">
-          <legend>Gender</legend>
-          <input id="gender_male" name="gender" type="radio" value="male" /><label>Male</label>
-          </div>
-          <div class="control">
-            <input id="gender_female" name="gender" type="radio" value="female" /><label>Female</label>
-            
-          </fieldset>
-          <!-- Checkbox is labeled with 'for' + 'name'. -->
-        <div class="control">
-          <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1" />
-          <label for="accept_agbs">I accept the terms and conditions</label>
-        </div>
-        <div class="control">
-          <input name="validate" type="hidden" value="1" />
-          <input type="submit" value="Register" />
-        </div>
-      </form>
-      
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-          <script>
-          "use strict";
-      (function () {
-        var validateInput;
-      
-        $.urlParam = function (name) {
-          var results;
-          results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href);
-      
-          if (results === null) {
-            return null;
-          } else {
-           // Replaced decodeURI with decodeURIComponent and converted "+" to space
-            return decodeURIComponent(results[1].replace(/\+/g, ' ')) || null;
+      <div>
+        <!-- Label is linked to input with 'for' + 'id'-->
+        <input id="gender_female" name="gender" type="radio" value="female" />
+        <label for="gender_female">Female</label>
+      </div>
+    </fieldset>
+    <!-- Checkbox is labeled with 'for' + 'name'. -->
+    <div class="control">
+      <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1" />
+      <label for="accept_agbs">I accept the terms and conditions</label>
+    </div>
+    <div class="control">
+      <input name="validate" type="hidden" value="1" />
+      <input type="submit" value="Register" />
+    </div>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>
+    "use strict";
+    (function () {
+      var validateInput;
+
+      $.urlParam = function (name) {
+        var results;
+        results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href);
+
+        if (results === null) {
+          return null;
+        } else {
+          // Replaced decodeURI with decodeURIComponent and converted "+" to space
+          return decodeURIComponent(results[1].replace(/\+/g, ' ')) || null;
+
+        }
+      };
+
+      validateInput = function validateInput(input, message) {
+        var $elementToDescribe, $error, $errorContainer, $fieldset, $input, $referencedElement, value;
+        $input = $('[name="' + input + '"]');
+
+        if ((value = $.urlParam(input)) === null) {
+          if ($('fieldset.errors').length === 0) {
+            // Accessible error summary: announced and can receive focus
+            $('form').prepend(
+              '<fieldset class="errors" role="alert" aria-live="assertive" tabindex="-1">' +
+              '<legend id="errors-title">Errors</legend>' +
+              '<ul></ul>' +
+              '</fieldset>'
+            );
 
           }
-        };
-      
-        validateInput = function validateInput(input, message) {
-          var $elementToDescribe, $error, $errorContainer, $fieldset, $input, $referencedElement, value;
-          $input = $('[name="' + input + '"]');
-      
-          if ((value = $.urlParam(input)) === null) {
-            if ($('fieldset.errors').length === 0) {
-              $('form').prepend('<fieldset class="errors"><legend>Errors</legend><ul></ul></fieldset>');
-            }
-      
-            $referencedElement = null;
-            $elementToDescribe = null;
-            $errorContainer = $('fieldset.errors ul');
-      
-            if ($input.is(':radio')) {
-              $fieldset = $input.closest('fieldset');
-              $elementToDescribe = $fieldset;
-              $referencedElement = $input.filter(':first');
-            } else {
-              $elementToDescribe = $input;
-              $referencedElement = $input;
-            }
-      // R.G. hint: fix next line ;)
-            // This allows jQuery to correctly count errors and focus the input when clicked
-            $error = $('<a class="error" href="#' + $referencedElement.attr('id') + '">' + message + '</a>');
-            $error.click(function (e) {
-              // If we rely on the link's href pointing to the input's ID, it doesn't trigger forms mode in screen readers
-              $referencedElement.focus();
-              return e.preventDefault();
-            });
-            $elementToDescribe.attr('aria-describedby', input + '_description');
-            $errorContainer.append('<li>').find('li:last').append($error);
-      
-            if ($(':not(form):focus').length === 0) {
-              // See https://stackoverflow.com/questions/46134247/jquery-setting-focus-doesnt-work-in-ie11/
-            
-            }
+
+          $referencedElement = null;
+          $elementToDescribe = null;
+          $errorContainer = $('fieldset.errors ul');
+
+          if ($input.is(':radio')) {
+            $fieldset = $input.closest('fieldset');
+            $elementToDescribe = $fieldset;
+            $referencedElement = $input.filter(':first');
           } else {
-            if ($input.is(':checkbox')) {
-              $input.attr('checked', true);
-            }
-      
-            if ($input.is(':radio')) {
-              return $input.filter('[value="' + value + '"]').attr('checked', true);
-            } else {
-              return $input.val(value);
-            }
+            $elementToDescribe = $input;
+            $referencedElement = $input;
           }
-        };
-      
-        $(document).ready(function () {
-          if ($.urlParam('validate')) {
-            validateInput('name', 'Please enter your name!');
-            validateInput('biography', 'Please tell us something about your history!');
-            validateInput('gender', 'Please tell us your gender!');
-            validateInput('accept_agbs', 'You must accept our terms and conditions!');
-           // Prevents showing the success alert when there are still validation errors
-            if ($('fieldset.errors a.error').length === 0) {
+          // R.G. hint: fix next line ;)
+          // This allows jQuery to correctly count errors and focus the input when clicked
+          $error = $('<a class="error" href="#' + $referencedElement.attr('id') + '">' + message + '</a>');
+          $error.click(function (e) {
+            // If we rely on the link's href pointing to the input's ID, it doesn't trigger forms mode in screen readers
+            $referencedElement.focus();
+            return e.preventDefault();
+          });
+          $elementToDescribe.attr('aria-describedby', input + '_description');
+          $errorContainer.append('<li>').find('li:last').append($error);
+
+          if ($(':not(form):focus').length === 0) {
+            // See https://stackoverflow.com/questions/46134247/jquery-setting-focus-doesnt-work-in-ie11/
+
+          }
+        } else {
+          if ($input.is(':checkbox')) {
+            $input.attr('checked', true);
+          }
+
+          if ($input.is(':radio')) {
+            return $input.filter('[value="' + value + '"]').attr('checked', true);
+          } else {
+            return $input.val(value);
+          }
+        }
+      };
+
+      $(document).ready(function () {
+        if ($.urlParam('validate')) {
+          validateInput('name', 'Please enter your name!');
+          validateInput('biography', 'Please tell us something about your history!');
+          validateInput('gender', 'Please tell us your gender!');
+          validateInput('accept_agbs', 'You must accept our terms and conditions!');
+          // Prevents showing the success alert when there are still validation errors
+          if ($('fieldset.errors a.error').length === 0) {
             alert('All inputs are valid.');
-                } else {
+          } else {
             // Automatically move focus to the first error link for accessibility
             $('fieldset.errors a.error').first().focus();
-           }
           }
-        });
-      }).call(void 0);</script>
-                
-        </body>
-      </html>
+        }
+      });
+    }).call(void 0);</script>
+
+</body>
+
+</html>
